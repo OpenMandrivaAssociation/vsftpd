@@ -1,6 +1,6 @@
 %define name	vsftpd
 %define version	2.0.5
-%define	rel	3
+%define	rel	4
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
@@ -31,6 +31,7 @@ Patch10:	vsftpd-2.0.1-server_args.patch
 Patch11:	vsftpd-2.0.1-dir.patch
 Patch12:	vsftpd-2.0.1-use_localtime.patch
 Patch13:	vsftpd-1.2.1-nonrootconf.patch
+Patch14:	vsftpd-2.0.3-background.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
 Requires(post):    	rpm-helper
@@ -64,6 +65,7 @@ cp %{SOURCE1} .
 %patch11  -p1 -b .dir
 %patch12  -p1 -b .use_localtime
 %patch13  -p1 -b .nonroot
+%patch14  -p1 -b .background
 
 %build
 %serverbuild
