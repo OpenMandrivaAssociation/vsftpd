@@ -34,6 +34,7 @@ Patch13:	vsftpd-1.2.1-nonrootconf.patch
 Patch14:	vsftpd-2.0.3-background.patch
 Patch15:	vsftpd-2.0.5-anon_umask.patch
 Patch16:	vsftpd-2.0.5-chowngroup.patch
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
 Requires(post):    	rpm-helper
 Requires(postun):  	rpm-helper
