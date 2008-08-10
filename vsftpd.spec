@@ -1,23 +1,23 @@
 %define name	vsftpd
-%define version	2.0.5
-%define	rel	14
+%define version	2.0.7
+%define	rel	1
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-License:	GPL
+License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
-Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.bz2
+Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.gz
 Source1:	vsftpd.xinetd
 Source2:	vsftpd.pam
 Source3:	vsftpd.ftpusers
 Source4:	vsftpd.user_list
 Source5:	vsftpd.init
 Source6:	vsftpd_conf_migrate.sh
-Source7:    vsftpd.service.bz2
+Source7:	vsftpd.service.bz2
 Patch1:		vsftpd-1.1.3-rh.patch
 Patch2:		vsftpd-1.0.1-missingok.patch
 Patch3:		vsftpd-2.0.5-anon.patch
@@ -32,7 +32,7 @@ Patch11:	vsftpd-2.0.1-dir.patch
 Patch12:	vsftpd-2.0.1-use_localtime.patch
 Patch13:	vsftpd-1.2.1-nonrootconf.patch
 Patch14:	vsftpd-2.0.3-background.patch
-Patch15:	vsftpd-2.0.5-anon_umask.patch
+#Patch15:	vsftpd-2.0.5-anon_umask.patch
 Patch16:	vsftpd-2.0.5-chowngroup.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
@@ -68,7 +68,7 @@ cp %{SOURCE1} .
 %patch12  -p1 -b .use_localtime
 %patch13  -p1 -b .nonroot
 %patch14  -p1 -b .background
-%patch15  -p1 -b .anon_umask
+#%patch15  -p1 -b .anon_umask
 %patch16  -p1 -b .chowngroup
 
 %build
