@@ -34,6 +34,7 @@ Patch13:	vsftpd-1.2.1-nonrootconf.patch
 Patch14:	vsftpd-2.0.3-background.patch
 #Patch15:	vsftpd-2.0.5-anon_umask.patch
 Patch16:	vsftpd-2.0.5-chowngroup.patch
+Patch17:	vsftpd-2.0.7-ssl.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
 Requires(post):    	rpm-helper
@@ -70,6 +71,7 @@ cp %{SOURCE1} .
 %patch14  -p1 -b .background
 #%patch15  -p1 -b .anon_umask
 %patch16  -p1 -b .chowngroup
+%patch17  -p1 -b .ssl
 
 %build
 %serverbuild
