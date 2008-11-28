@@ -10,7 +10,7 @@ Release:	%{release}
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
-Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.gz
+Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.bz2
 Source1:	vsftpd.xinetd
 Source2:	vsftpd.pam
 Source3:	vsftpd.ftpusers
@@ -88,7 +88,7 @@ rm -rf %buildroot
 
 install -m755 vsftpd -D %buildroot%{_sbindir}/vsftpd
 install -m600 vsftpd.conf -D %buildroot%{_sysconfdir}/vsftpd/vsftpd.conf
-install -m644 vsftpd.xinetd -D %buildroot%{_sysconfdir}/xinetd.d/vsftpd
+install -m644 vsftpd.xinetd -D %buildroot%{_sysconfdir}/xinetd.d/vsftpd-xinetd
 install -m644 vsftpd.conf.5 -D %buildroot/%{_mandir}/man5/vsftpd.conf.5
 install -m644 vsftpd.8 -D %buildroot%{_mandir}/man8/vsftpd.8
 install -m644 RedHat/vsftpd.log -D %buildroot%{_sysconfdir}/logrotate.d/vsftpd
@@ -139,7 +139,7 @@ rm -rf %buildroot
 %config(noreplace) %{_sysconfdir}/pam.d/vsftpd
 %config(noreplace) %{_sysconfdir}/logrotate.d/vsftpd
 %config(noreplace) %{_sysconfdir}/avahi/services/%{name}.service
-%config(noreplace) %{_sysconfdir}/xinetd.d/vsftpd
+%config(noreplace) %{_sysconfdir}/xinetd.d/vsftpd-xinetd
 
 %{_mandir}/*/*
 
