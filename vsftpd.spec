@@ -1,6 +1,6 @@
 %define name	vsftpd
-%define version	2.0.7
-%define	rel	2
+%define version	2.1.0
+%define	rel	1
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
@@ -19,18 +19,18 @@ Source5:	vsftpd.init
 Source6:	vsftpd_conf_migrate.sh
 Source7:	vsftpd.service.bz2
 Patch1:		vsftpd-1.1.3-rh.patch
-Patch2:		vsftpd-1.0.1-missingok.patch
+#Patch2:		vsftpd-1.0.1-missingok.patch
 Patch3:		vsftpd-2.0.5-anon.patch
-Patch4:		vsftpd-2.0.1-lib64.patch
-Patch5:		vsftpd-2.0.1-tcp_wrappers.patch
+#Patch4:		vsftpd-2.0.1-lib64.patch
+#Patch5:		vsftpd-2.0.1-tcp_wrappers.patch
 Patch6:		vsftpd-1.5.1-libs.patch
-Patch7:		vsftpd-2.0.2-signal.patch
+#Patch7:		vsftpd-2.0.2-signal.patch
 Patch8:		vsftpd-1.2.1-conffile.patch
 Patch9:		vsftpd-2.0.1-build_ssl.patch
 Patch10:	vsftpd-2.0.1-server_args.patch
 Patch11:	vsftpd-2.0.1-dir.patch
 Patch12:	vsftpd-2.0.1-use_localtime.patch
-Patch13:	vsftpd-1.2.1-nonrootconf.patch
+#Patch13:	vsftpd-1.2.1-nonrootconf.patch
 Patch14:	vsftpd-2.0.3-background.patch
 #Patch15:	vsftpd-2.0.5-anon_umask.patch
 Patch16:	vsftpd-2.0.5-chowngroup.patch
@@ -55,19 +55,19 @@ Audit Team" Evans.
 %prep
 %setup -q
 %patch1   -p1 -b .orig
-%patch2   -p1 -b .mok
+#%patch2   -p1 -b .mok
 %patch3   -p1 -b .anon
-%patch4   -p1 -b .lib64
+#%patch4   -p1 -b .lib64
 cp %{SOURCE1} .
-%patch5   -p1 -b .tcp_wrap
+#%patch5   -p1 -b .tcp_wrap
 %patch6   -p1 -b .libs
-%patch7   -p1 -b .signal
+#%patch7   -p1 -b .signal
 %patch8   -p1
 %patch9  -p1 -b .build_ssl
 %patch10  -p1 -b .servers_args
 %patch11  -p1 -b .dir
 %patch12  -p1 -b .use_localtime
-%patch13  -p1 -b .nonroot
+#%patch13  -p1 -b .nonroot
 %patch14  -p1 -b .background
 #%patch15  -p1 -b .anon_umask
 %patch16  -p1 -b .chowngroup
