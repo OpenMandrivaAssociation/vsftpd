@@ -1,5 +1,5 @@
 %define name	vsftpd
-%define version	2.1.0
+%define version	2.1.2
 %define	rel	1
 %define	release	%mkrel %{rel}
 
@@ -10,7 +10,7 @@ Release:	%{release}
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
-Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.bz2
+Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.gz
 Source1:	vsftpd.xinetd
 Source2:	vsftpd.pam
 Source3:	vsftpd.ftpusers
@@ -29,7 +29,7 @@ Patch8:		vsftpd-1.2.1-conffile.patch
 Patch9:		vsftpd-2.0.1-build_ssl.patch
 Patch10:	vsftpd-2.0.1-server_args.patch
 Patch11:	vsftpd-2.0.1-dir.patch
-Patch12:	vsftpd-2.0.1-use_localtime.patch
+Patch12:	vsftpd-2.1.2-use_localtime.patch
 #Patch13:	vsftpd-1.2.1-nonrootconf.patch
 Patch14:	vsftpd-2.0.3-background.patch
 #Patch15:	vsftpd-2.0.5-anon_umask.patch
