@@ -1,6 +1,6 @@
 %define name	vsftpd
 %define version	2.1.2
-%define	rel	1
+%define	rel	2
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
