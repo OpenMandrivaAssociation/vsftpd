@@ -1,6 +1,6 @@
 %define name	vsftpd
-%define version	2.1.2
-%define	rel	2
+%define version	2.2.2
+%define	rel	1
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
@@ -24,19 +24,19 @@ Patch1:		vsftpd-2.1.0-libs.patch
 Patch2: 	vsftpd-2.1.0-build_ssl.patch
 Patch3: 	vsftpd-2.1.0-tcp_wrappers.patch
 # Use /etc/vsftpd/ instead of /etc/
-Patch4:		vsftpd-2.1.0-configuration.patch
+Patch4:		vsftpd-2.2.2-configuration.patch
 # These need review
-Patch5: 	vsftpd-2.1.0-pam_hostname.patch
+Patch5: 	vsftpd-2.2.2-pam_hostname.patch
 Patch6: 	vsftpd-close-std-fds.patch
 Patch7: 	vsftpd-2.1.0-filter.patch
 Patch8: 	vsftpd-2.0.5-greedy.patch
 Patch9: 	vsftpd-2.1.0-userlist_log.patch
-Patch10:	vsftpd-2.1.0-trim.patch
-Patch12: 	vsftpd-2.1.1-daemonize_plus.patch
+Patch10:	vsftpd-2.2.2-trim.patch
+Patch12: 	vsftpd-2.2.2-daemonize_plus.patch
 # Mandriva patches
 Patch101:	vsftpd-2.0.5-anon.patch
 Patch102:	vsftpd-2.0.1-server_args.patch
-Patch103:	vsftpd-2.1.2-use_localtime.patch
+Patch103:	vsftpd-2.2.2-use_localtime.patch
 Patch104:	vsftpd-2.0.5-chowngroup.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
