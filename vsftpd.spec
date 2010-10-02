@@ -1,6 +1,6 @@
 %define name	vsftpd
-%define version	2.2.2
-%define	rel	4
+%define version	2.3.2
+%define	rel	1
 %define	release	%mkrel %{rel}
 
 Summary:	Very Secure File Transfer Protocol Daemon
@@ -37,7 +37,7 @@ Patch12: 	vsftpd-2.2.2-daemonize_plus.patch
 Patch101:	vsftpd-2.0.5-anon.patch
 Patch102:	vsftpd-2.0.1-server_args.patch
 Patch103:	vsftpd-2.2.2-use_localtime.patch
-Patch104:	vsftpd-2.0.5-chowngroup.patch
+Patch104:	vsftpd-2.3.2-chowngroup.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
 Requires(post):    	rpm-helper
@@ -78,7 +78,7 @@ cp %{SOURCE1} .
 %build
 %serverbuild
 
-%make CFLAGS="$RPM_OPT_FLAGS"
+%make CFLAGS="%optflags" LINK="%ldflags"
 # should go to rh patch.
 # Change a few defaults in the config:
 perl -pi -e 's|#ls_recurse_enable|ls_recurse_enable|' vsftpd.conf
