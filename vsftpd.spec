@@ -1,12 +1,7 @@
-%define name	vsftpd
-%define version	2.3.2
-%define	rel	1
-%define	release	%mkrel %{rel}
-
 Summary:	Very Secure File Transfer Protocol Daemon
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		vsftpd
+Version:	2.3.4
+Release:	%mkrel 1
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
@@ -38,7 +33,6 @@ Patch101:	vsftpd-2.0.5-anon.patch
 Patch102:	vsftpd-2.0.1-server_args.patch
 Patch103:	vsftpd-2.2.2-use_localtime.patch
 Patch104:	vsftpd-2.3.2-chowngroup.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):		rpm-helper
 Requires(post):    	rpm-helper
 Requires(postun):  	rpm-helper
@@ -50,6 +44,7 @@ Conflicts:	proftpd
 Conflicts:	ncftpd
 Conflicts:	pure-ftpd
 BuildRequires:	libcap-devel openssl-devel pam-devel tcp_wrappers-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 A Very Secure FTP Daemon - written from scratch - by Chris "One Man Security
