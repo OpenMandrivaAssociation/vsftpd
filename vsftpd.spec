@@ -1,11 +1,12 @@
 Summary:	Very Secure File Transfer Protocol Daemon
 Name:		vsftpd
-Version:	2.3.4
-Release:	%mkrel 2
+Version:	3.0.0
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
-Source0:	ftp://vsftpd.beasts.org/users/cevans/%{name}-%{version}.tar.gz
+Source0:	https://security.appspot.com/downloads/%name-%version.tar.gz
+Source10:	https://security.appspot.com/downloads/%name-%version.tar.gz.asc
 Source1:	vsftpd.xinetd
 Source2:	vsftpd.pam
 Source3:	vsftpd.ftpusers
@@ -15,7 +16,7 @@ Source6:	vsftpd_conf_migrate.sh
 Source7:	vsftpd.service.bz2
 # Fedora patches
 # Build patches
-Patch1:		vsftpd-2.1.0-libs.patch
+Patch1:		vsftpd-3.0.0-libs.patch
 Patch2: 	vsftpd-2.1.0-build_ssl.patch
 Patch3: 	vsftpd-2.1.0-tcp_wrappers.patch
 # Use /etc/vsftpd/ instead of /etc/
@@ -44,7 +45,6 @@ Conflicts:	proftpd
 Conflicts:	ncftpd
 Conflicts:	pure-ftpd
 BuildRequires:	libcap-devel openssl-devel pam-devel tcp_wrappers-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 A Very Secure FTP Daemon - written from scratch - by Chris "One Man Security
