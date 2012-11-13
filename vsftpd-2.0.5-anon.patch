@@ -1,0 +1,36 @@
+*** vsftpd-2.0.5/privops.c.orig	2006-06-15 00:11:22.000000000 +0200
+--- vsftpd-2.0.5/privops.c	2006-08-09 17:19:29.000000000 +0200
+***************
+*** 12,17 ****
+--- 12,18 ----
+  #include "privops.h"
+  #include "session.h"
+  #include "sysdeputil.h"
++ #include "sysstr.h"
+  #include "sysutil.h"
+  #include "utility.h"
+  #include "str.h"
+***************
+*** 149,155 ****
+--- 150,170 ----
+      enum EVSFPrivopLoginResult result = kVSFLoginFail;
+      if (anonymous_login)
+      {
++       struct mystr dir_str = INIT_MYSTR;
++       static struct vsf_sysutil_user* p_user;
++       static struct vsf_sysutil_statbuf* h_sbuf;
++ 
+        result = handle_anonymous_login(p_sess, p_pass_str);
++ 
++       p_user = str_getpwnam(p_user_str);
++       if (p_user == 0)
++       {
++         die("str_getpwnam");
++       }
++       str_alloc_text(&dir_str, vsf_sysutil_user_get_homedir(p_user));
++       if (str_stat(&dir_str, &h_sbuf))
++       result = kVSFLoginFail;
++ 
+      }
+      else
+      {

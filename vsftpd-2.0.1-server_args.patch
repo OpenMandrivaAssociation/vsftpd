@@ -1,0 +1,11 @@
+--- vsftpd-2.0.1/xinetd.d/vsftpd.server_args	2001-10-11 21:40:17.000000000 +0200
++++ vsftpd-2.0.1/xinetd.d/vsftpd	2004-10-01 14:52:28.171052120 +0200
+@@ -9,7 +9,7 @@
+         wait                    = no
+         user                    = root
+         server                  = /usr/local/sbin/vsftpd
+-#       server_args             =
++	server_args		= /etc/vsftpd/vsftpd.conf
+ #       log_on_success          += DURATION USERID
+ #       log_on_failure          += USERID
+         nice                    = 10

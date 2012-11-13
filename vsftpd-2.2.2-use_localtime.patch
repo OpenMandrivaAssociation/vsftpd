@@ -1,0 +1,57 @@
+diff -ur vsftpd-2.2.2.orig/logging.c vsftpd-2.2.2/logging.c
+--- vsftpd-2.2.2.orig/logging.c	2009-10-19 05:24:23.000000000 +0200
++++ vsftpd-2.2.2/logging.c	2010-02-11 20:44:48.000000000 +0100
+@@ -177,7 +177,7 @@
+   long delta_sec;
+   enum EVSFLogEntryType what = (enum EVSFLogEntryType) p_sess->log_type;
+   /* Date - vsf_sysutil_get_current_date updates cached time */
+-  str_alloc_text(p_str, vsf_sysutil_get_current_date());
++  str_alloc_text(p_str, vsf_sysutil_get_current_date(tunable_use_localtime));
+   str_append_char(p_str, ' ');
+   /* Transfer time (in seconds) */
+   delta_sec = vsf_sysutil_get_time_sec() - p_sess->log_start_sec;
+@@ -259,7 +259,7 @@
+   if (!tunable_syslog_enable)
+   {
+     /* Date - vsf_sysutil_get_current_date updates cached time */
+-    str_append_text(p_str, vsf_sysutil_get_current_date());
++    str_append_text(p_str, vsf_sysutil_get_current_date(tunable_use_localtime));
+     /* Pid */
+     str_append_text(p_str, " [pid ");
+     str_append_ulong(p_str, vsf_sysutil_getpid());
+diff -ur vsftpd-2.2.2.orig/sysutil.c vsftpd-2.2.2/sysutil.c
+--- vsftpd-2.2.2.orig/sysutil.c	2009-11-12 03:03:19.000000000 +0100
++++ vsftpd-2.2.2/sysutil.c	2010-02-11 20:45:23.000000000 +0100
+@@ -2577,14 +2577,18 @@
+ }
+ 
+ const char*
+-vsf_sysutil_get_current_date(void)
++vsf_sysutil_get_current_date(int use_localtime)
+ {
+   static char datebuf[64];
+   time_t curr_time;
+   const struct tm* p_tm;
+   int i = 0;
+   curr_time = vsf_sysutil_get_time_sec();
+-  p_tm = localtime(&curr_time);
++  if (!use_localtime) {  
++    p_tm = gmtime(&curr_time);
++  } else {
++    p_tm = localtime(&curr_time);
++  }
+   if (strftime(datebuf, sizeof(datebuf), "%a %b!%d %H:%M:%S %Y", p_tm) == 0)
+   {
+     die("strftime");
+diff -ur vsftpd-2.2.2.orig/sysutil.h vsftpd-2.2.2/sysutil.h
+--- vsftpd-2.2.2.orig/sysutil.h	2009-11-12 01:48:37.000000000 +0100
++++ vsftpd-2.2.2/sysutil.h	2010-02-11 20:44:48.000000000 +0100
+@@ -303,7 +303,7 @@
+ void vsf_sysutil_make_session_leader(void);
+ void vsf_sysutil_reopen_standard_fds(void);
+ void vsf_sysutil_tzset(void);
+-const char* vsf_sysutil_get_current_date(void);
++const char* vsf_sysutil_get_current_date(int use_localtime);
+ void vsf_sysutil_qsort(void* p_base, unsigned int num_elem,
+                        unsigned int elem_size,
+                        int (*p_compar)(const void *, const void *));

@@ -1,0 +1,10 @@
+sources:
+  "vsftpd-3.0.0.tar.gz:"	436da30cefa33e22a0266077ab95397e9432e297
+  "vsftpd-3.0.0.tar.gz.asc:"	2142ac8a84f18ecc1ebac21b9ac07858c35ae6af
+  "vsftpd_conf_migrate.sh:"	cd20853a6f577773e289aa740709a9cbaf84c669
+  "vsftpd.ftpusers:"	257093f8fc399d542933d57742d2c43df4d32be9
+  "vsftpd.init:"	5fb73ce9d44c12204fef7aa3522692c98b91fd08
+  "vsftpd.pam:"	a0dde7dae0c1eb1d3867b79ae25022516e1fd9a6
+  "vsftpd.service.bz2:"	f0e55b208e4f861f0c1fdf98423e417a4c7b494c
+  "vsftpd.user_list:"	bbebfcb0de8cd71c3bd8b8aa599f5aad710fa2b1
+  "vsftpd.xinetd:"	17c8aab1870bcd8ff844c66dec4f4913a3f97162
