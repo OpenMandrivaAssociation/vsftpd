@@ -15,7 +15,7 @@ diff -up vsftpd-2.2.0/sysdeputil.c.pam_hostname vsftpd-2.2.0/sysdeputil.c
 @@ -325,6 +329,10 @@ vsf_sysdep_check_auth(struct mystr* p_us
                        const struct mystr* p_remote_host)
  {
-   int retval;
+   int retval = -1;
 +#ifdef PAM_RHOST
 +  struct sockaddr_in sin;
 +  struct hostent *host;

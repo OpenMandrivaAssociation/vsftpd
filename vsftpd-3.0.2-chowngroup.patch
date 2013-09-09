@@ -1,6 +1,7 @@
---- vsftpd-2.3.2/main.c.chowngroup	2010-03-26 04:14:45.000000000 +0100
-+++ vsftpd-2.3.2/main.c	2010-10-02 03:06:54.000000000 +0200
-@@ -49,8 +49,8 @@
+diff -p -up vsftpd-3.0.2/main.c.chowngroup vsftpd-3.0.2/main.c
+--- vsftpd-3.0.2/main.c.chowngroup	2012-09-16 04:27:13.000000000 +0000
++++ vsftpd-3.0.2/main.c	2012-12-03 23:02:33.790842646 +0000
+@@ -49,8 +49,8 @@ main(int argc, const char* argv[])
      0, INIT_MYSTR,
      /* Session state */
      0,
@@ -11,7 +12,7 @@
      /* Pre-chroot() cache */
      INIT_MYSTR, INIT_MYSTR, INIT_MYSTR, INIT_MYSTR, 1,
      /* Logging */
-@@ -337,6 +337,7 @@
+@@ -348,6 +348,7 @@ session_init(struct vsf_session* p_sess)
             tunable_ftp_username);
      }
      p_sess->anon_ftp_uid = vsf_sysutil_user_getuid(p_user);
@@ -19,7 +20,7 @@
    }
    if (tunable_guest_enable)
    {
-@@ -348,17 +349,26 @@
+@@ -362,10 +363,12 @@ session_init(struct vsf_session* p_sess)
             tunable_guest_username);
      }
      p_sess->guest_user_uid = vsf_sysutil_user_getuid(p_user);
@@ -27,18 +28,22 @@
    }
    if (tunable_chown_uploads)
    {
-     const struct vsf_sysutil_user* p_user =
-       vsf_sysutil_getpwnam(tunable_chown_username);
-+    const struct vsf_sysutil_group* p_group =
-+      vsf_sysutil_getgrnam(tunable_chown_groupname);
-     if (p_user == 0)
+     const struct vsf_sysutil_user* p_user = 0;
++    const struct vsf_sysutil_group* p_group = 0;
+     if (tunable_chown_username)
      {
+       p_user = vsf_sysutil_getpwnam(tunable_chown_username);
+@@ -375,7 +378,17 @@ session_init(struct vsf_session* p_sess)
        die2("vsftpd: cannot locate user specified in 'chown_username':",
             tunable_chown_username);
      }
++    if (tunable_chown_groupname)
++    {
++      p_group = vsf_sysutil_getgrnam(tunable_chown_groupname);
++    }
 +    if (p_group == 0)
 +    {
-+      die2("vsftpd: cannot locate user specified in 'chown_groupname':",
++      die2("vsftpd: cannot locate group specified in 'chown_groupname':",
 +           tunable_chown_groupname);
 +    }
      p_sess->anon_upload_chown_uid = vsf_sysutil_user_getuid(p_user);
@@ -46,9 +51,10 @@
    }
  }
  
---- vsftpd-2.3.2/parseconf.c.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/parseconf.c	2010-10-02 03:05:46.000000000 +0200
-@@ -149,6 +149,7 @@
+diff -p -up vsftpd-3.0.2/parseconf.c.chowngroup vsftpd-3.0.2/parseconf.c
+--- vsftpd-3.0.2/parseconf.c.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/parseconf.c	2012-12-03 22:51:34.555916856 +0000
+@@ -151,6 +151,7 @@ parseconf_str_array[] =
    { "secure_chroot_dir", &tunable_secure_chroot_dir },
    { "ftp_username", &tunable_ftp_username },
    { "chown_username", &tunable_chown_username },
@@ -56,9 +62,10 @@
    { "xferlog_file", &tunable_xferlog_file },
    { "vsftpd_log_file", &tunable_vsftpd_log_file },
    { "message_file", &tunable_message_file },
---- vsftpd-2.3.2/privops.c.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/privops.c	2010-10-02 03:05:46.000000000 +0200
-@@ -214,9 +214,11 @@
+diff -p -up vsftpd-3.0.2/privops.c.chowngroup vsftpd-3.0.2/privops.c
+--- vsftpd-3.0.2/privops.c.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/privops.c	2012-12-03 22:51:34.555916856 +0000
+@@ -228,9 +228,11 @@ vsf_privop_do_file_chown(struct vsf_sess
  {
    static struct vsf_sysutil_statbuf* s_p_statbuf;
    vsf_sysutil_fstat(fd, &s_p_statbuf);
@@ -73,7 +80,7 @@
    {
      return;
    }
-@@ -224,9 +226,12 @@
+@@ -238,9 +240,12 @@ vsf_privop_do_file_chown(struct vsf_sess
     * the the anonymous ftp user
     */
    if (p_sess->anon_upload_chown_uid == -1 ||
@@ -87,7 +94,7 @@
    {
      die("invalid fd in cmd_process_chown");
    }
-@@ -234,7 +239,7 @@
+@@ -248,7 +253,7 @@ vsf_privop_do_file_chown(struct vsf_sess
     * otherwise a compromise of the FTP user will lead to compromise of
     * the "anon_upload_chown_uid" user (think chmod +s).
     */
@@ -96,9 +103,10 @@
  }
  
  enum EVSFPrivopLoginResult
---- vsftpd-2.3.2/session.h.chowngroup	2010-03-17 06:05:53.000000000 +0100
-+++ vsftpd-2.3.2/session.h	2010-10-02 03:05:46.000000000 +0200
-@@ -53,8 +53,11 @@
+diff -p -up vsftpd-3.0.2/session.h.chowngroup vsftpd-3.0.2/session.h
+--- vsftpd-3.0.2/session.h.chowngroup	2012-04-05 01:27:19.000000000 +0000
++++ vsftpd-3.0.2/session.h	2012-12-03 22:51:34.555916856 +0000
+@@ -55,8 +55,11 @@ struct vsf_session
  
    /* Details of userids which are interesting to us */
    int anon_ftp_uid;
@@ -110,9 +118,10 @@
  
    /* Things we need to cache before we chroot() */
    struct mystr banned_email_str;
---- vsftpd-2.3.2/sysutil.c.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/sysutil.c	2010-10-02 03:05:46.000000000 +0200
-@@ -2312,6 +2312,12 @@
+diff -p -up vsftpd-3.0.2/sysutil.c.chowngroup vsftpd-3.0.2/sysutil.c
+--- vsftpd-3.0.2/sysutil.c.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/sysutil.c	2012-12-03 22:51:34.555916856 +0000
+@@ -2328,6 +2328,12 @@ vsf_sysutil_getpwnam(const char* p_user)
    return (struct vsf_sysutil_user*) getpwnam(p_user);
  }
  
@@ -125,7 +134,7 @@
  const char*
  vsf_sysutil_user_getname(const struct vsf_sysutil_user* p_user)
  {
-@@ -2340,6 +2346,13 @@
+@@ -2356,6 +2362,13 @@ vsf_sysutil_user_getgid(const struct vsf
    return p_passwd->pw_gid;
  }
  
@@ -139,9 +148,10 @@
  struct vsf_sysutil_group*
  vsf_sysutil_getgrgid(const int gid)
  {
---- vsftpd-2.3.2/sysutil.h.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/sysutil.h	2010-10-02 03:05:46.000000000 +0200
-@@ -297,8 +297,10 @@
+diff -p -up vsftpd-3.0.2/sysutil.h.chowngroup vsftpd-3.0.2/sysutil.h
+--- vsftpd-3.0.2/sysutil.h.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/sysutil.h	2012-12-03 22:51:34.555916856 +0000
+@@ -297,8 +297,10 @@ const char* vsf_sysutil_user_get_homedir
    const struct vsf_sysutil_user* p_user);
  int vsf_sysutil_user_getuid(const struct vsf_sysutil_user* p_user);
  int vsf_sysutil_user_getgid(const struct vsf_sysutil_user* p_user);
@@ -152,9 +162,10 @@
  const char* vsf_sysutil_group_getname(const struct vsf_sysutil_group* p_group);
  
  /* More random things */
---- vsftpd-2.3.2/tunables.c.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/tunables.c	2010-10-02 03:05:46.000000000 +0200
-@@ -112,6 +112,7 @@
+diff -p -up vsftpd-3.0.2/tunables.c.chowngroup vsftpd-3.0.2/tunables.c
+--- vsftpd-3.0.2/tunables.c.chowngroup	2012-12-03 22:51:34.545916632 +0000
++++ vsftpd-3.0.2/tunables.c	2012-12-03 22:51:34.555916856 +0000
+@@ -114,6 +114,7 @@ unsigned int tunable_chown_upload_mode;
  const char* tunable_secure_chroot_dir;
  const char* tunable_ftp_username;
  const char* tunable_chown_username;
@@ -162,7 +173,7 @@
  const char* tunable_xferlog_file;
  const char* tunable_vsftpd_log_file;
  const char* tunable_message_file;
-@@ -255,6 +256,7 @@
+@@ -259,6 +260,7 @@ tunables_load_defaults()
    install_str_setting("/usr/share/empty", &tunable_secure_chroot_dir);
    install_str_setting("ftp", &tunable_ftp_username);
    install_str_setting("root", &tunable_chown_username);
@@ -170,9 +181,10 @@
    install_str_setting("/var/log/xferlog", &tunable_xferlog_file);
    install_str_setting("/var/log/vsftpd.log", &tunable_vsftpd_log_file);
    install_str_setting(".message", &tunable_message_file);
---- vsftpd-2.3.2/tunables.h.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/tunables.h	2010-10-02 03:05:46.000000000 +0200
-@@ -115,6 +115,7 @@
+diff -p -up vsftpd-3.0.2/tunables.h.chowngroup vsftpd-3.0.2/tunables.h
+--- vsftpd-3.0.2/tunables.h.chowngroup	2012-12-03 22:51:34.545916632 +0000
++++ vsftpd-3.0.2/tunables.h	2012-12-03 22:51:34.555916856 +0000
+@@ -117,6 +117,7 @@ extern unsigned int tunable_chown_upload
  extern const char* tunable_secure_chroot_dir;
  extern const char* tunable_ftp_username;
  extern const char* tunable_chown_username;
@@ -180,9 +192,10 @@
  extern const char* tunable_xferlog_file;
  extern const char* tunable_vsftpd_log_file;
  extern const char* tunable_message_file;
---- vsftpd-2.3.2/vsftpd.conf.5.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/vsftpd.conf.5	2010-10-02 03:05:46.000000000 +0200
-@@ -801,6 +801,14 @@
+diff -p -up vsftpd-3.0.2/vsftpd.conf.5.chowngroup vsftpd-3.0.2/vsftpd.conf.5
+--- vsftpd-3.0.2/vsftpd.conf.5.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/vsftpd.conf.5	2012-12-03 22:51:34.555916856 +0000
+@@ -802,6 +802,14 @@ is set.
  
  Default: root
  .TP
@@ -197,9 +210,10 @@
  .B chroot_list_file
  The option is the name of a file containing a list of local users which
  will be placed in a chroot() jail in their home directory. This option is
---- vsftpd-2.3.2/vsftpd.conf.chowngroup	2010-10-02 03:05:46.000000000 +0200
-+++ vsftpd-2.3.2/vsftpd.conf	2010-10-02 03:05:46.000000000 +0200
-@@ -45,6 +45,7 @@
+diff -p -up vsftpd-3.0.2/vsftpd.conf.chowngroup vsftpd-3.0.2/vsftpd.conf
+--- vsftpd-3.0.2/vsftpd.conf.chowngroup	2012-12-03 22:51:34.555916856 +0000
++++ vsftpd-3.0.2/vsftpd.conf	2012-12-03 22:51:34.555916856 +0000
+@@ -45,6 +45,7 @@ connect_from_port_20=YES
  # recommended!
  #chown_uploads=YES
  #chown_username=whoever

@@ -1,3 +1,6 @@
+removed_sources:
+  vsftpd-2.3.4.tar.gz: b774cc6b4c50e20f4fe9ca7f6aa74169ce7fe5ea
 sources:
-  "vsftpd-2.3.4.tar.gz": b774cc6b4c50e20f4fe9ca7f6aa74169ce7fe5ea
-  "vsftpd.service.bz2": f0e55b208e4f861f0c1fdf98423e417a4c7b494c
+  vsftpd-3.0.2.tar.gz: f36976bb1c5df25ac236d8a29e965ba2b825ccd0
+  vsftpd-3.0.2.tar.gz.asc: 42c6055c1418ad93340bfa3b176b60f1e5b15e0a
+  vsftpd.service.bz2: f0e55b208e4f861f0c1fdf98423e417a4c7b494c
