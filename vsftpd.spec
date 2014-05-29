@@ -1,7 +1,8 @@
 Summary:	Very Secure File Transfer Protocol Daemon
+
 Name:		vsftpd
 Version:	3.0.2
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
@@ -80,7 +81,7 @@ cp %{SOURCE1} .
 %build
 %serverbuild
 
-%make CFLAGS="%optflags" LINK="%ldflags"
+%make CFLAGS="%{optflags}" LINK="%{ldflags}"
 # should go to rh patch.
 # Change a few defaults in the config:
 perl -pi -e 's|#ls_recurse_enable|ls_recurse_enable|' vsftpd.conf
@@ -105,7 +106,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/avahi/services/
 bzcat %{SOURCE7} > %{buildroot}/%{_sysconfdir}/avahi/services/%{name}.service
  
 touch %{buildroot}%{_sysconfdir}/vsftpd/banned-emails
-touch %{buildroot}%{_sysconfdir}/vsftpd/chroot-list
+touch %{buildroot}%{_sysconfdir}/vsftpd/chroot_list
 mkdir -p %{buildroot}/var/ftp/pub
 
 %post
