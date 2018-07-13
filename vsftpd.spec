@@ -47,6 +47,7 @@ Conflicts:	wu-ftpd
 Conflicts:	proftpd
 Conflicts:	ncftpd
 Conflicts:	pure-ftpd
+BuildRequires:	pkgconfig(libnsl)
 BuildRequires:	libcap-devel
 BuildRequires:	pam-devel
 BuildRequires:	openssl-devel
