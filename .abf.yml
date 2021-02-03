@@ -1,3 +1,4 @@
 sources:
-  vsftpd.service.bz2: f0e55b208e4f861f0c1fdf98423e417a4c7b494c
   vsftpd-3.0.3.tar.gz: d5f5a180dbecd0fbcdc92bf0ba2fc001c962b55a
+  vsftpd-3.0.3.tar.gz.asc: c35514551d53249e4159504597306c23ce2e5d4d
+  vsftpd.service.bz2: f0e55b208e4f861f0c1fdf98423e417a4c7b494c

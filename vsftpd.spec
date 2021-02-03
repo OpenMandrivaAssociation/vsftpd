@@ -50,7 +50,7 @@ Conflicts:	pure-ftpd
 BuildRequires:	pkgconfig(libnsl)
 BuildRequires:	libcap-devel
 BuildRequires:	pam-devel
-BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	tcp_wrappers-devel
 
 %description
@@ -82,7 +82,7 @@ cp %{SOURCE1} .
 %build
 %serverbuild
 
-%make CFLAGS="%{optflags}" LINK="%{ldflags}"
+%make_build CFLAGS="%{optflags}" LINK="%{build_ldflags}"
 # should go to rh patch.
 # Change a few defaults in the config:
 perl -pi -e 's|#ls_recurse_enable|ls_recurse_enable|' vsftpd.conf
