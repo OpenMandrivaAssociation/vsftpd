@@ -1,7 +1,7 @@
 Summary:	Very Secure File Transfer Protocol Daemon
 Name:		vsftpd
-Version:	3.0.4
-Release:	3
+Version:	3.0.5
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://vsftpd.beasts.org/
