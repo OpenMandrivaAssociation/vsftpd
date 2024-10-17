@@ -4,7 +4,7 @@ Version:	3.0.5
 Release:	2
 License:	GPLv2+
 Group:		System/Servers
-URL:		http://vsftpd.beasts.org/
+URL:		https://vsftpd.beasts.org/
 Source0:	https://security.appspot.com/downloads/%{name}-%{version}.tar.gz
 Source2:	vsftpd.pam
 Source3:	vsftpd.ftpusers
