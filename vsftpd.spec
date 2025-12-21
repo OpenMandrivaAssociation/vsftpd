@@ -42,6 +42,7 @@ Conflicts:	wu-ftpd
 Conflicts:	proftpd
 Conflicts:	ncftpd
 Conflicts:	pure-ftpd
+BuildRequires:	make
 BuildRequires:	pkgconfig(libnsl)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	pam-devel
