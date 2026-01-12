@@ -34,7 +34,6 @@ Patch104:	vsftpd-3.0.2-chowngroup.patch
 Patch105:	vsftpd-drop-newpid-from-clone.patch
 Patch106:	vsftpd-3.0.5-openssl-3.patch
 Requires:	pam >= 0.59
-Requires:	libcap
 Requires:	openssl
 Requires:	logrotate
 Provides:	ftpserver
