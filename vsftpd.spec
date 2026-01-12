@@ -1,7 +1,7 @@
 Summary:	Very Secure File Transfer Protocol Daemon
 Name:		vsftpd
 Version:	3.0.5
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Servers
 URL:		https://vsftpd.beasts.org/
@@ -16,7 +16,6 @@ Source8:	vsftpd.service
 # Build patches
 Patch1:		vsftpd-2.1.0-libs.patch
 Patch2: 	vsftpd-2.1.0-build_ssl.patch
-Patch3: 	vsftpd-2.1.0-tcp_wrappers.patch
 # Use /etc/vsftpd/ instead of /etc/
 Patch4:		vsftpd-2.2.2-configuration.patch
 # These need review
@@ -33,6 +32,7 @@ Patch102:	vsftpd-2.0.1-server_args.patch
 Patch103:	vsftpd-2.2.2-use_localtime.patch
 Patch104:	vsftpd-3.0.2-chowngroup.patch
 Patch105:	vsftpd-drop-newpid-from-clone.patch
+Patch106:	vsftpd-3.0.5-openssl-3.patch
 Requires:	pam >= 0.59
 Requires:	libcap
 Requires:	openssl
@@ -47,7 +47,6 @@ BuildRequires:	pkgconfig(libnsl)
 BuildRequires:	pkgconfig(libcap)
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig(openssl)
-BuildRequires:	tcp_wrappers-devel
 
 %description
 A Very Secure FTP Daemon - written from scratch - by Chris "One Man Security
