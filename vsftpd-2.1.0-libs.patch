@@ -6,7 +6,7 @@ diff -up vsftpd-3.0.0/Makefile.libs vsftpd-3.0.0/Makefile
  	#-pedantic -Wconversion
  
 -LIBS	=	`./vsf_findlibs.sh`
-+LIBS	=	-lwrap -lnsl -lpam -lcap -ldl -lcrypto -lssl
++LIBS	=	-lnsl -lpam -lcap -ldl -lcrypto -lssl
  LINK	=	-Wl,-s
  LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
  

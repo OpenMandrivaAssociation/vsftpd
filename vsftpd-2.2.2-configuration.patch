@@ -405,11 +405,10 @@ diff -up vsftpd-2.2.0/vsftpd.conf.configuration vsftpd-2.2.0/vsftpd.conf
  #
  # You may activate the "-R" option to the builtin ls. This is disabled by
  # default to avoid remote users being able to cause excessive I/O on large
-@@ -112,3 +112,7 @@ listen=YES
+@@ -112,3 +112,6 @@ listen=YES
  # sockets, you must run two copies of vsftpd with two configuration files.
  # Make sure, that one of the listen options is commented !!
  #listen_ipv6=YES
 +
 +pam_service_name=vsftpd
 +userlist_enable=YES
-+tcp_wrappers=YES
